@@ -57,7 +57,7 @@ public class ClientGUI extends JFrame {
 	protected DefaultListModel<String> listModel = new DefaultListModel();
 
 	// Title
-	protected static final String TITLE = "UDP Chat";
+	protected static final String TITLE = "UDP Chat - Client";
 
 	// Client
 	protected Client client = null;
@@ -77,8 +77,6 @@ public class ClientGUI extends JFrame {
 
 	// LookAndFeel
 	public ClientGUI() {
-		// Thread.setDefaultUncaughtExceptionHandler(new
-		// RuntimeExceptionHandler());
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -148,13 +146,13 @@ public class ClientGUI extends JFrame {
 
 		// Logo
 		lblLogo = new JLabel("");
-		lblLogo.setBounds(10, 16, 90, 28);
+		lblLogo.setBounds(10, 9, 90, 28);
 		lblLogo.setIcon(new ImageIcon(ClientGUI.class
 				.getResource("/fff/triplef/udpchat/client/img/logo.png")));
 		getContentPane().add(lblLogo);
 		// Login Textfield
 		textFieldUsername = new JTextField();
-		textFieldUsername.setBounds(110, 18, 174, 28);
+		textFieldUsername.setBounds(110, 9, 174, 28);
 		getContentPane().add(textFieldUsername);
 		textFieldUsername.setColumns(10);
 		textFieldUsername.addActionListener(new ActionListener() {
@@ -167,7 +165,7 @@ public class ClientGUI extends JFrame {
 		// LoginButton
 		btnLogin = new JButton("Login");
 		btnLogin.setMnemonic('l');
-		btnLogin.setBounds(294, 16, 89, 28);
+		btnLogin.setBounds(294, 9, 89, 28);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				if (btnLogin.getText().equals("Login")) {
@@ -203,7 +201,7 @@ public class ClientGUI extends JFrame {
 		lblActualuser = new JLabel("", JLabel.CENTER);
 		lblActualuser.setForeground(new Color(44, 63, 146));
 		lblActualuser.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblActualuser.setBounds(393, 18, 122, 28);
+		lblActualuser.setBounds(393, 9, 122, 28);
 		getContentPane().add(lblActualuser);
 		// Chat
 		scrollPaneChat = new JScrollPane();
@@ -225,7 +223,7 @@ public class ClientGUI extends JFrame {
 		scrollPaneList = new JScrollPane();
 		scrollPaneList
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneList.setBounds(393, 54, 122, 227);
+		scrollPaneList.setBounds(393, 47, 122, 227);
 		getContentPane().add(scrollPaneList);
 
 		list = new JList();
