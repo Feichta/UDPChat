@@ -30,19 +30,12 @@ public class Clipboard {
 					DataFlavor.stringFlavor);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException e) {
 		}
-		System.out.println("1");
 		if (paste != null && paste instanceof String) {
-			System.out.println("2");
 			String address = paste.toString().replace(Clipboard.key, "");
-			System.out.println("adress" + address);
-			System.out.println("ölkj");
 			if (address != null && address.length() != 0) {
-				System.out.println("ölkjizio");
 				try {
 					URI uri = new URI("my://" + address);
-					System.out.println("tzuio" + uri.getHost() + uri.getPort());
-					if (uri.getHost() != null || uri.getPort() != -1) {
-						System.out.println("jlk");
+					if (uri.getHost() != null && !uri.getHost().contains("http") && uri.getPort() != -1) {
 						return uri.getHost() + ":" + uri.getPort() + key;
 					}
 				} catch (Exception e) {

@@ -94,24 +94,23 @@ public class ClientGUI extends JFrame {
 		int ip = 0;
 		boolean invalidData = false;
 		do {
-			System.out.println("ölklö");
 			invalidData = false;
 			final JTextField textFieldHostName = new JTextField();
 			JTextField textFieldPort = new JTextField();
-			System.out.println(new Clipboard().paste() + "####");
 			if (new Clipboard().paste() != null) {
-				System.out.println("ölkj");
+				System.out.println(new Clipboard().paste());
 				if (new Clipboard().paste().contains(Clipboard.key)) {
+					System.out.println("khjk");
 					String[] cb = new Clipboard().paste().split(":");
 					textFieldHostName.setText(cb[0]);
 					textFieldPort.setText(cb[1].replace(Clipboard.key, ""));
 				}
 			}
 
-			Object[] message = { "Hostname or IP", textFieldHostName, "Port",
+			Object[] message = { "IP or hostname:", textFieldHostName, "Port:",
 					textFieldPort };
 			int option = JOptionPane.showConfirmDialog(null, message,
-					"Type in server characteristics",
+					"Choose server",
 					JOptionPane.OK_CANCEL_OPTION);
 			if (option == JOptionPane.OK_OPTION) {
 				if ((textFieldHostName.getText().length() > 0)
@@ -171,7 +170,7 @@ public class ClientGUI extends JFrame {
 		// LoginButton
 		btnLogin = new JButton("Login");
 		btnLogin.setMnemonic('l');
-		btnLogin.setBounds(299, 18, 89, 28);
+		btnLogin.setBounds(294, 16, 89, 28);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				if (btnLogin.getText().equals("Login")) {
