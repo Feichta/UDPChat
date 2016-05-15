@@ -31,7 +31,6 @@ public class Clipboard {
 		} catch (HeadlessException | UnsupportedFlavorException | IOException e) {
 		}
 		if (paste != null && paste instanceof String) {
-			System.out.println(paste);
 			if (paste.toString().contains(Clipboard.key)) {
 				String address = paste.toString().replace(Clipboard.key, ":");
 				if (address != null && address.length() != 0) {
