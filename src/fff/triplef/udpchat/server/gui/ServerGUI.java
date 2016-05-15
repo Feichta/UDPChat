@@ -2,6 +2,8 @@ package fff.triplef.udpchat.server.gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
@@ -9,6 +11,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
@@ -21,13 +25,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import fff.triplef.udpchat.exception.UDPChatException;
 import fff.triplef.udpchat.server.server.Server;
 import fff.triplef.udpchat.server.server.ServerThread;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ServerGUI extends JFrame {
-
 	// GUI
 	private JLabel lblHost;
 	private JLabel lblPort;
@@ -62,7 +61,7 @@ public class ServerGUI extends JFrame {
 		} catch (Exception e) {
 			UDPChatException.behandleException(this, e);
 		}
-		setTitle("UDP Server");
+		setTitle("UDP Chat - Server");
 		setSize(430, 250);
 		setLocationRelativeTo(null);
 		try {
