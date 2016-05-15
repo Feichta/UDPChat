@@ -29,8 +29,7 @@ import fff.triplef.udpchat.client.gui.WriteChat;
 import fff.triplef.udpchat.exception.UDPChatException;
 import fff.triplef.udpchat.message.Message;
 
-public class Client
-{
+public class Client {
 	private DatagramSocket clientSocket = null;
 	private String host = null;
 	private int ip = 0;
@@ -77,65 +76,67 @@ public class Client
 			Message msg = (Message) iStream.readObject();
 			iStream.close();
 			switch (msg.getId()) {
-				case Message.ID_MESSAGE:
-					wc.write("<font color='gray'>" + msg.getPublic() + "</font>" + "<b>"
-							+ msg.getSender() + "</b>: " + msg.getMessage() + "\n");
-					break;
-				case Message.ID_IMAGE:
-					wc.write("<font color='gray'>" + msg.getPublic() + "</font>" + "<b>"
-							+ msg.getSender() + ":\n</b>");
-					Style style = textPane.getStyledDocument()
-							.addStyle("StyleName", null);
-					StyleConstants.setIcon(style, msg.getImage());
-					try {
-						textPane.getStyledDocument().insertString(
-								textPane.getStyledDocument().getLength(), "Nothing", style);
-					} catch (BadLocationException e) {
-						e.printStackTrace();
-					}
-					wc.write("\n");
-					break;
-				case Message.ID_LOGIN:
-					if (msg.getSender().equals(clientGUI.actualUsername)) {
-						lblActualUser.setText(msg.getSender());
-					} else {
-						listModel.addElement(msg.getSender());
-					}
-					wc.write("<b><font color='gray'>" + msg.getSender()
-							+ " logged in\n </font></b>");
-					if (clientGUI.actualUsername.equals(msg.getSender())) {
-						listModel.add(0, "(All)");
-						list.setSelectedIndex(0);
-					}
-					break;
-				case Message.ID_LOGOUT:
-					wc.write("<b><font color='gray'>" + msg.getSender()
-							+ " logged out \n</font></b>");
-					if (msg.getSender().equals(list.getSelectedValue())) {
-						list.setSelectedIndex(0);
-						clientGUI.setActualReciver(Message.ID_ALL);
-						if (listModel.getSize() > 1)
-							wc.write("<b><font color='blue'>You joined the public chat \n</font></b>");
-					}
-					listModel.removeElement(msg.getSender());
-					break;
-				case Message.ID_ONLINE:
+			case Message.ID_MESSAGE:
+				wc.write("<font color='gray'>" + msg.getPublic() + "</font>"
+						+ "<b>" + msg.getSender() + "</b>: " + msg.getMessage()
+						+ "\n");
+				break;
+			case Message.ID_IMAGE:
+				wc.write("<font color='gray'>" + msg.getPublic() + "</font>"
+						+ "<b>" + msg.getSender() + ":\n</b>");
+				Style style = textPane.getStyledDocument().addStyle(
+						"StyleName", null);
+				StyleConstants.setIcon(style, msg.getImage());
+				try {
+					textPane.getStyledDocument().insertString(
+							textPane.getStyledDocument().getLength(),
+							"Nothing", style);
+				} catch (BadLocationException e) {
+					e.printStackTrace();
+				}
+				wc.write("\n");
+				break;
+			case Message.ID_LOGIN:
+				if (msg.getSender().equals(clientGUI.actualUsername)) {
+					lblActualUser.setText(msg.getSender());
+				} else {
 					listModel.addElement(msg.getSender());
-					break;
-				case Message.ID_USERNAME_ALREADY_IN_USE:
-					btnLogin.setText("Login");
-					btnSend.setEnabled(false);
-					btnImage.setEnabled(false);
-					textAreaMessage.setEnabled(false);
-					textFieldUsername.setEnabled(true);
-					textFieldUsername.setText("");
-					textFieldUsername.requestFocus();
-					JOptionPane.showMessageDialog(clientGUI,
-							"Username is already in use", clientGUI.getTitle(),
-							JOptionPane.INFORMATION_MESSAGE);
-					break;
-				default:
-					break;
+				}
+				wc.write("<b><font color='gray'>" + msg.getSender()
+						+ " logged in\n </font></b>");
+				if (clientGUI.actualUsername.equals(msg.getSender())) {
+					listModel.add(0, "(All)");
+					list.setSelectedIndex(0);
+				}
+				break;
+			case Message.ID_LOGOUT:
+				wc.write("<b><font color='gray'>" + msg.getSender()
+						+ " logged out \n</font></b>");
+				if (msg.getSender().equals(list.getSelectedValue())) {
+					list.setSelectedIndex(0);
+					clientGUI.setActualReciver(Message.ID_ALL);
+					if (listModel.getSize() > 1)
+						wc.write("<b><font color='blue'>You joined the public chat \n</font></b>");
+				}
+				listModel.removeElement(msg.getSender());
+				break;
+			case Message.ID_ONLINE:
+				listModel.addElement(msg.getSender());
+				break;
+			case Message.ID_USERNAME_ALREADY_IN_USE:
+				btnLogin.setText("Login");
+				btnSend.setEnabled(false);
+				btnImage.setEnabled(false);
+				textAreaMessage.setEnabled(false);
+				textFieldUsername.setEnabled(true);
+				textFieldUsername.setText("");
+				textFieldUsername.requestFocus();
+				JOptionPane.showMessageDialog(clientGUI,
+						"Username is already in use", clientGUI.getTitle(),
+						JOptionPane.INFORMATION_MESSAGE);
+				break;
+			default:
+				break;
 			}
 		}
 	}

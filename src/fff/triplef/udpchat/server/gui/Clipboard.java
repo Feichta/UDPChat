@@ -1,13 +1,14 @@
 package fff.triplef.udpchat.server.gui;
 
-import java.awt.datatransfer.*;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.net.URI;
 
 public class Clipboard {
-
 	public static final String key = "u%98secr3t&";
 
 	public Clipboard() {

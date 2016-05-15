@@ -15,8 +15,7 @@ import java.util.Hashtable;
 import fff.triplef.udpchat.exception.UDPChatException;
 import fff.triplef.udpchat.message.Message;
 
-public class Server
-{
+public class Server {
 	private Hashtable<String, InetSocketAddress> clients = null;
 	private DatagramSocket serverSocket = null;
 
@@ -49,34 +48,34 @@ public class Server
 			msg = (Message) iStream.readObject();
 			iStream.close();
 			switch (msg.getId()) {
-				case Message.ID_MESSAGE:
-					iterateClientsAndSendMessage(msg, Message.ID_MESSAGE);
-					break;
-				case Message.ID_IMAGE:
-					iterateClientsAndSendMessage(msg, Message.ID_IMAGE);
-					break;
-				case Message.ID_LOGIN:
-					if (containsClient(msg.getSender())) {
-						InetSocketAddress isa = new InetSocketAddress(
-								receivePacket.getAddress(), receivePacket.getPort());
-						Message msgTemp = new Message(null, null,
-								Message.ID_USERNAME_ALREADY_IN_USE, null, null);
-						sendMessage(false, msgTemp, isa);
-					} else {
-						insertClient(receivePacket, msg.getSender());
-						iterateClientsAndSendMessage(msg, Message.ID_LOGIN);
-						sendOtherClientsToClient(msg.getSender());
-					}
-					break;
-				case Message.ID_LOGOUT:
-					iterateClientsAndSendMessage(msg, Message.ID_LOGOUT);
-					try {
-						deleteClient(msg.getSender());
-					} catch (Exception e) {
-					}
-					break;
-				default:
-					break;
+			case Message.ID_MESSAGE:
+				iterateClientsAndSendMessage(msg, Message.ID_MESSAGE);
+				break;
+			case Message.ID_IMAGE:
+				iterateClientsAndSendMessage(msg, Message.ID_IMAGE);
+				break;
+			case Message.ID_LOGIN:
+				if (containsClient(msg.getSender())) {
+					InetSocketAddress isa = new InetSocketAddress(
+							receivePacket.getAddress(), receivePacket.getPort());
+					Message msgTemp = new Message(null, null,
+							Message.ID_USERNAME_ALREADY_IN_USE, null, null);
+					sendMessage(false, msgTemp, isa);
+				} else {
+					insertClient(receivePacket, msg.getSender());
+					iterateClientsAndSendMessage(msg, Message.ID_LOGIN);
+					sendOtherClientsToClient(msg.getSender());
+				}
+				break;
+			case Message.ID_LOGOUT:
+				iterateClientsAndSendMessage(msg, Message.ID_LOGOUT);
+				try {
+					deleteClient(msg.getSender());
+				} catch (Exception e) {
+				}
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -88,8 +87,8 @@ public class Server
 			while (usernames.hasMoreElements()) {
 				String username = usernames.nextElement();
 				InetSocketAddress isa = clients.get(username);
-				Message msgTemp = new Message(msg.getSender(), Message.ID_ALL, id,
-						msg.getMessage(), msg.getImage());
+				Message msgTemp = new Message(msg.getSender(), Message.ID_ALL,
+						id, msg.getMessage(), msg.getImage());
 				sendMessage(true, msgTemp, isa);
 			}
 		} else {
@@ -108,7 +107,8 @@ public class Server
 		while (e.hasMoreElements()) {
 			String username = e.nextElement();
 			if (username != receiver) {
-				Message msg = new Message(username, null, Message.ID_ONLINE, null, null);
+				Message msg = new Message(username, null, Message.ID_ONLINE,
+						null, null);
 				sendMessage(false, msg, isa);
 			}
 		}
@@ -119,7 +119,8 @@ public class Server
 	}
 
 	private void insertClient(DatagramPacket dp, String username) {
-		clients.put(username, new InetSocketAddress(dp.getAddress(), dp.getPort()));
+		clients.put(username,
+				new InetSocketAddress(dp.getAddress(), dp.getPort()));
 	}
 
 	private void deleteClient(String username) {

@@ -1,7 +1,6 @@
 package fff.triplef.udpchat.server.server;
 
-public class ServerThread extends Thread
-{
+public class ServerThread extends Thread {
 	private Server server = null;
 	private int port = 0;
 

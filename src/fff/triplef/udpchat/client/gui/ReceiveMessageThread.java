@@ -4,8 +4,7 @@ import java.io.IOException;
 
 import fff.triplef.udpchat.exception.UDPChatException;
 
-public class ReceiveMessageThread extends Thread
-{
+public class ReceiveMessageThread extends Thread {
 	// GUI
 	ClientGUI clientGUI = null;
 
@@ -19,9 +18,9 @@ public class ReceiveMessageThread extends Thread
 		try {
 			clientGUI.client.receiveMessage(clientGUI.textPaneChat,
 					clientGUI.listModel, clientGUI, clientGUI.btnLogin,
-					clientGUI.lblActualuser, clientGUI.btnSend, clientGUI.btnImage,
-					clientGUI.textFieldUsername, clientGUI.textAreaMessage,
-					clientGUI.list);
+					clientGUI.lblActualuser, clientGUI.btnSend,
+					clientGUI.btnImage, clientGUI.textFieldUsername,
+					clientGUI.textAreaMessage, clientGUI.list);
 		} catch (IOException | ClassNotFoundException e) {
 			UDPChatException.behandleException(clientGUI, e);
 		}

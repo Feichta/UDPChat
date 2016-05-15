@@ -108,8 +108,7 @@ public class ClientGUI extends JFrame {
 			Object[] message = { "IP or hostname:", textFieldHostName, "Port:",
 					textFieldPort };
 			int option = JOptionPane.showConfirmDialog(null, message,
-					"Choose server",
-					JOptionPane.OK_CANCEL_OPTION);
+					"Choose server", JOptionPane.OK_CANCEL_OPTION);
 			if (option == JOptionPane.OK_OPTION) {
 				if ((textFieldHostName.getText().length() > 0)
 						&& (textFieldPort.getText().length() > 0)) {

@@ -6,8 +6,7 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 
-public class WriteChat
-{
+public class WriteChat {
 	private JTextPane textPaneChat = null;
 
 	public WriteChat(JTextPane textPaneChat) {

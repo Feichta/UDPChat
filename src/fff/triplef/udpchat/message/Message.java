@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public class Message implements Serializable
-{
+public class Message implements Serializable {
 	// receiver
 	public static final String ID_ALL = "(All)";
 
@@ -22,7 +21,7 @@ public class Message implements Serializable
 	private int id = 0;
 	private String message = null;
 	private ImageIcon image = null;
-	
+
 	private boolean publiC = false;
 
 	public Message() {
