@@ -98,12 +98,10 @@ public class ClientGUI extends JFrame {
 			final JTextField textFieldHostName = new JTextField();
 			JTextField textFieldPort = new JTextField();
 			if (new Clipboard().paste() != null) {
-				System.out.println(new Clipboard().paste());
 				if (new Clipboard().paste().contains(Clipboard.key)) {
-					System.out.println("khjk");
-					String[] cb = new Clipboard().paste().split(":");
+					String[] cb = new Clipboard().paste().split(Clipboard.key);
 					textFieldHostName.setText(cb[0]);
-					textFieldPort.setText(cb[1].replace(Clipboard.key, ""));
+					textFieldPort.setText(cb[1]);
 				}
 			}
 

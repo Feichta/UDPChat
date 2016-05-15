@@ -15,7 +15,7 @@ public class Clipboard {
 	}
 
 	public void copy(String ip, String port) {
-		String address = ip + ":" + port + key;
+		String address = ip + key + port;
 		StringSelection stringSelection = new StringSelection(address);
 		java.awt.datatransfer.Clipboard clpbrd = Toolkit.getDefaultToolkit()
 				.getSystemClipboard();
@@ -31,14 +31,19 @@ public class Clipboard {
 		} catch (HeadlessException | UnsupportedFlavorException | IOException e) {
 		}
 		if (paste != null && paste instanceof String) {
-			String address = paste.toString().replace(Clipboard.key, "");
-			if (address != null && address.length() != 0) {
-				try {
-					URI uri = new URI("my://" + address);
-					if (uri.getHost() != null && !uri.getHost().contains("http") && uri.getPort() != -1) {
-						return uri.getHost() + ":" + uri.getPort() + key;
+			System.out.println(paste);
+			if (paste.toString().contains(Clipboard.key)) {
+				String address = paste.toString().replace(Clipboard.key, ":");
+				if (address != null && address.length() != 0) {
+					try {
+						URI uri = new URI("my://" + address);
+						if (uri.getHost() != null
+								&& !uri.getHost().contains("http")
+								&& uri.getPort() != -1) {
+							return uri.getHost() + key + uri.getPort();
+						}
+					} catch (Exception e) {
 					}
-				} catch (Exception e) {
 				}
 			}
 		}
