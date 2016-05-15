@@ -26,8 +26,8 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ServerGUI extends JFrame
-{
+public class ServerGUI extends JFrame {
+
 	// GUI
 	private JLabel lblHost;
 	private JLabel lblPort;
@@ -35,6 +35,7 @@ public class ServerGUI extends JFrame
 	private JTextField textFieldHostName;
 	private JToggleButton tglbtnStartServer;
 	private JLabel lblServerState;
+	private JButton btnCopy;
 
 	// Server
 	private Server server = null;
@@ -50,8 +51,7 @@ public class ServerGUI extends JFrame
 	}
 
 	public ServerGUI() {
-		// Thread.setDefaultUncaughtExceptionHandler(new RuntimeExceptionHandler());
-		server = new Server();
+		this.server = new Server();
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -102,33 +102,37 @@ public class ServerGUI extends JFrame
 		tglbtnStartServer.setIcon(new ImageIcon(ServerGUI.class
 				.getResource("/fff/triplef/udpchat/server/img/off.png")));
 		tglbtnStartServer.setBounds(316, 67, 84, 42);
-		tglbtnStartServer.addItemListener(new ItemListener()
-		{
+		tglbtnStartServer.addItemListener(new ItemListener() {
 
 			@SuppressWarnings("deprecation")
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					serverThread = new ServerThread(server, (int) (spinner.getValue()));
-					new Clipboard().copy(textFieldHostName.getText().split("/")[1],
-							spinner.getValue().toString());
-					tglbtnStartServer.setIcon(new ImageIcon(ServerGUI.class
-							.getResource("/fff/triplef/udpchat/server/img/on.png")));
+					btnCopy.setEnabled(true);
+					serverThread = new ServerThread(server, (int) (spinner
+							.getValue()));
+					new Clipboard().copy(
+							textFieldHostName.getText().split("/")[1], spinner
+									.getValue().toString());
+					tglbtnStartServer.setIcon(new ImageIcon(
+							ServerGUI.class
+									.getResource("/fff/triplef/udpchat/server/img/on.png")));
 					lblServerState.setText("Server running...");
 					spinner.setEnabled(false);
 					lblServerState.setForeground(Color.GREEN);
-				} else
-					if (e.getStateChange() == ItemEvent.DESELECTED) {
-						if (server.isStarted()) {
-							server.stop();
-						}
-						serverThread.stop();
-						tglbtnStartServer.setIcon(new ImageIcon(ServerGUI.class
-								.getResource("/fff/triplef/udpchat/server/img/off.png")));
-						lblServerState.setText("Server stopped");
-						spinner.setEnabled(true);
-						lblServerState.setForeground(Color.RED);
+				} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+					btnCopy.setEnabled(false);
+					if (server.isStarted()) {
+						server.stop();
 					}
+					serverThread.stop();
+					tglbtnStartServer.setIcon(new ImageIcon(
+							ServerGUI.class
+									.getResource("/fff/triplef/udpchat/server/img/off.png")));
+					lblServerState.setText("Server stopped");
+					spinner.setEnabled(true);
+					lblServerState.setForeground(Color.RED);
+				}
 			}
 		});
 		getContentPane().add(tglbtnStartServer);
@@ -139,17 +143,17 @@ public class ServerGUI extends JFrame
 		lblServerState.setBounds(10, 126, 390, 68);
 		getContentPane().add(lblServerState);
 
-		JButton btnCopy = new JButton("");
-		btnCopy.addActionListener(new ActionListener()
-		{
+		btnCopy = new JButton("");
+		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Clipboard().copy(textFieldHostName.getText().split("/")[1], spinner
-						.getValue().toString());
+				new Clipboard().copy(textFieldHostName.getText().split("/")[1],
+						spinner.getValue().toString());
 			}
 		});
 		btnCopy.setIcon(new ImageIcon(ServerGUI.class
 				.getResource("/fff/triplef/udpchat/server/img/copy.png")));
 		btnCopy.setBounds(358, 15, 42, 42);
+		btnCopy.setEnabled(false);
 		getContentPane().add(btnCopy);
 
 		addWindowListener(new WindowClosing(server));

@@ -39,8 +39,7 @@ import fff.triplef.udpchat.exception.UDPChatException;
 import fff.triplef.udpchat.message.Message;
 import fff.triplef.udpchat.server.gui.Clipboard;
 
-public class ClientGUI extends JFrame
-{
+public class ClientGUI extends JFrame {
 	// GUI
 	protected JTextField textFieldUsername;
 	protected JButton btnLogin;
@@ -78,7 +77,8 @@ public class ClientGUI extends JFrame
 
 	// LookAndFeel
 	public ClientGUI() {
-		// Thread.setDefaultUncaughtExceptionHandler(new RuntimeExceptionHandler());
+		// Thread.setDefaultUncaughtExceptionHandler(new
+		// RuntimeExceptionHandler());
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -94,18 +94,25 @@ public class ClientGUI extends JFrame
 		int ip = 0;
 		boolean invalidData = false;
 		do {
+			System.out.println("ölklö");
 			invalidData = false;
 			final JTextField textFieldHostName = new JTextField();
 			JTextField textFieldPort = new JTextField();
+			System.out.println(new Clipboard().paste() + "####");
 			if (new Clipboard().paste() != null) {
-				String[] cb = new Clipboard().paste().split(":");
-				textFieldHostName.setText(cb[0]);
-				textFieldPort.setText(cb[1]);
+				System.out.println("ölkj");
+				if (new Clipboard().paste().contains(Clipboard.key)) {
+					String[] cb = new Clipboard().paste().split(":");
+					textFieldHostName.setText(cb[0]);
+					textFieldPort.setText(cb[1].replace(Clipboard.key, ""));
+				}
 			}
+
 			Object[] message = { "Hostname or IP", textFieldHostName, "Port",
 					textFieldPort };
 			int option = JOptionPane.showConfirmDialog(null, message,
-					"Type in server characteristics", JOptionPane.OK_CANCEL_OPTION);
+					"Type in server characteristics",
+					JOptionPane.OK_CANCEL_OPTION);
 			if (option == JOptionPane.OK_OPTION) {
 				if ((textFieldHostName.getText().length() > 0)
 						&& (textFieldPort.getText().length() > 0)) {
@@ -154,8 +161,7 @@ public class ClientGUI extends JFrame
 		textFieldUsername.setBounds(110, 18, 174, 28);
 		getContentPane().add(textFieldUsername);
 		textFieldUsername.setColumns(10);
-		textFieldUsername.addActionListener(new ActionListener()
-		{
+		textFieldUsername.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (btnLogin.getText().equals("Login")) {
 					login();
@@ -166,18 +172,19 @@ public class ClientGUI extends JFrame
 		btnLogin = new JButton("Login");
 		btnLogin.setMnemonic('l');
 		btnLogin.setBounds(299, 18, 89, 28);
-		btnLogin.addActionListener(new ActionListener()
-		{
+		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				if (btnLogin.getText().equals("Login")) {
 					login();
 				} else {
 					if (btnLogin.getText().equals("Logout")) {
 						try {
-							client.sendMessage(new Message(actualUsername, Message.ID_ALL,
-									Message.ID_LOGOUT, null, null));
+							client.sendMessage(new Message(actualUsername,
+									Message.ID_ALL, Message.ID_LOGOUT, null,
+									null));
 						} catch (IOException e1) {
-							UDPChatException.behandleException(ClientGUI.this, e1);
+							UDPChatException.behandleException(ClientGUI.this,
+									e1);
 						}
 						actualUsername = null;
 						btnLogin.setText("Login");
@@ -229,8 +236,7 @@ public class ClientGUI extends JFrame
 		scrollPaneList.setViewportView(list);
 		list.setModel(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.addListSelectionListener(new ListSelectionListener()
-		{
+		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (e.getValueIsAdjusting()) {
 					actualReceiver = list.getSelectedValue().toString();
@@ -264,8 +270,7 @@ public class ClientGUI extends JFrame
 		input.put(shiftEnter, "insert-break");
 		input.put(enter, "text-submit");
 		ActionMap actions = textAreaMessage.getActionMap();
-		actions.put("text-submit", new AbstractAction()
-		{
+		actions.put("text-submit", new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				if (textAreaMessage.getText() != null
 						&& textAreaMessage.getText().length() != 0) {
@@ -286,8 +291,7 @@ public class ClientGUI extends JFrame
 				.getResource("/fff/triplef/udpchat/client/img/send.png")));
 		btnSend.setBounds(393, 300, 42, 42);
 		btnSend.setEnabled(false);
-		btnSend.addActionListener(new ActionListener()
-		{
+		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textAreaMessage.getText() != null
 						&& textAreaMessage.getText().length() != 0) {
@@ -314,16 +318,14 @@ public class ClientGUI extends JFrame
 				.getResource("/fff/triplef/udpchat/client/img/image.png")));
 		btnImage.setSelectedIcon(new ImageIcon(ClientGUI.class
 				.getResource("/fff/triplef/udpchat/client/img/image.png")));
-		btnImage.addActionListener(new ActionListener()
-		{
+		btnImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(new File(System.getProperty("user.home")
 						+ "\\Pictures"));
 				fc.setMultiSelectionEnabled(false);
 				fc.setAcceptAllFileFilterUsed(false);
-				fc.setFileFilter(new FileFilter()
-				{
+				fc.setFileFilter(new FileFilter() {
 					public String getDescription() {
 						return "Images (.gif .jpeg .jpg)";
 					}
@@ -334,8 +336,10 @@ public class ClientGUI extends JFrame
 						}
 						String extension = Utils.getExtension(f);
 						if (extension != null) {
-							if ((extension.equals(Utils.gif) || extension.equals(Utils.jpeg) || extension
-									.equals(Utils.jpg)) && f.length() < 6000) {
+							if ((extension.equals(Utils.gif)
+									|| extension.equals(Utils.jpeg) || extension
+										.equals(Utils.jpg))
+									&& f.length() < 6000) {
 								return true;
 							} else {
 								return false;
@@ -354,12 +358,13 @@ public class ClientGUI extends JFrame
 						UDPChatException.behandleException(ClientGUI.this, e1);
 					}
 					if (ii != null) {
-						Message msg = new Message(actualUsername, actualReceiver,
-								Message.ID_IMAGE, null, ii);
+						Message msg = new Message(actualUsername,
+								actualReceiver, Message.ID_IMAGE, null, ii);
 						try {
 							client.sendMessage(msg);
 						} catch (IOException e1) {
-							UDPChatException.behandleException(ClientGUI.this, e1);
+							UDPChatException.behandleException(ClientGUI.this,
+									e1);
 						}
 					}
 				}
@@ -380,8 +385,9 @@ public class ClientGUI extends JFrame
 	private void login() {
 		if (textFieldUsername.getText() == null
 				|| textFieldUsername.getText().length() == 0) {
-			JOptionPane.showMessageDialog(ClientGUI.this, "Please insert a username",
-					ClientGUI.this.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ClientGUI.this,
+					"Please insert a username", ClientGUI.this.getTitle(),
+					JOptionPane.INFORMATION_MESSAGE);
 			textAreaMessage.requestFocus();
 			textAreaMessage.setCaretPosition(textAreaMessage.getDocument()
 					.getLength());
@@ -389,8 +395,8 @@ public class ClientGUI extends JFrame
 			if (validateUsername(textFieldUsername.getText())) {
 				actualUsername = textFieldUsername.getText();
 				try {
-					client.sendMessage(new Message(actualUsername, Message.ID_ALL,
-							Message.ID_LOGIN, null, null));
+					client.sendMessage(new Message(actualUsername,
+							Message.ID_ALL, Message.ID_LOGIN, null, null));
 				} catch (IOException e1) {
 					UDPChatException.behandleException(ClientGUI.this, e1);
 				}
@@ -406,8 +412,8 @@ public class ClientGUI extends JFrame
 						.getLength());
 			} else {
 				JOptionPane.showMessageDialog(ClientGUI.this,
-						"This is not a valid username", ClientGUI.this.getTitle(),
-						JOptionPane.ERROR_MESSAGE);
+						"This is not a valid username",
+						ClientGUI.this.getTitle(), JOptionPane.ERROR_MESSAGE);
 				textFieldUsername.requestFocus();
 			}
 		}
