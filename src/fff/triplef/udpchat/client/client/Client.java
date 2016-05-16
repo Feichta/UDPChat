@@ -142,8 +142,6 @@ public class Client {
 	}
 
 	public void close(ReceiveMessageThread rmt) {
-		System.out.println("ölkk");
 		clientSocket.close();
-		System.out.println("jk");
 	}
 }

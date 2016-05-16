@@ -22,7 +22,6 @@ public class WindowClosing extends WindowAdapter {
 						Message.ID_LOGOUT, null, null));
 			} catch (IOException e1) {
 				UDPChatException.behandleException(clientGUI, e1);
-				System.out.println("kköj");
 			}
 		}
 		clientGUI.client.close(clientGUI.receiveMsgThread);
